@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 //import escapeRegExp from 'escape-string-regexp'
 //import sortBy from 'sort-by'
 import Shelf from './Shelf'
+import BookSearch from './BookSearch'
 
 
 class BookShelf extends Component{
@@ -24,6 +25,9 @@ class BookShelf extends Component{
      }]
 
     return (
+      this.state.showSearchPage? (
+        <BookSearch />
+      ):(
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
@@ -41,7 +45,7 @@ class BookShelf extends Component{
            <div className="open-search">
             <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
            </div>
-          </div>
+          </div>)
     )
   }//render
 }
