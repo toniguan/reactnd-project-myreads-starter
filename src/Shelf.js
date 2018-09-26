@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 //import PropTypes from 'prop-types'
 //import escapeRegExp from 'escape-string-regexp'
 //import sortBy from 'sort-by'
-import ShelfChanger from './ShelfChanger'
+import Book from './Book'
 
 
 class Shelf extends Component{
@@ -14,20 +14,9 @@ class Shelf extends Component{
         <h2 className="bookshelf-title">{shelfTitle}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
-          {books.filter((book)=>(book.shelf == shelfKey)).map((book) =>(
-            <li key={book.id}>
-              <div className="book">
-                <div className="book-top">
-                  <div className="book-cover" style={{ width: 128, height: 193,
-                    backgroundImage: `url(${book.imageLinks.thumbnail})`
-                    }}></div>
-                  <ShelfChanger />
-                </div>
-                <div className="book-title">{book.title}</div>
-                <div className="book-authors">{book.authors}</div>
-              </div>
-            </li>
-            ))}
+            {books.filter((book)=>(book.shelf === shelfKey)).map((book) =>(
+              <Book book={book} updateShelf={this.props.updateShelf} />
+              ))}
            </ol>
         </div>
       </div>

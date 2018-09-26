@@ -21,7 +21,11 @@ class BookSearch extends Component{
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid"></ol>
+          <ol className="books-grid">
+            {this.state.sbooks.map((book) =>(
+                <Book book={book} />
+              ))}
+            </ol>
         </div>
       </div>
     )
