@@ -3,20 +3,23 @@ import React, {Component} from 'react'
 //import PropTypes from 'prop-types'
 //import escapeRegExp from 'escape-string-regexp'
 //import sortBy from 'sort-by'
-import ShelfChanger from './ShelfChanger'
-
+//book.imageLinks&&book.imageLinks.thumbnail || ''
+//currentShelf? currentShelf : 'none'
 class Book extends Component{
   render(){
-    const {book, updateShelf} = this.props
+    const {book, updateShelf, currentShelf} = this.props
+    let thumbnail = book.imageLinks? book.imageLinks.thumbnail : '' // query = 'biography''tim'
+    let authors = this.props.book.authors? this.props.book.authors : 'No Author...' // query = 'poetry'
     return (
-        <li key={book.id}>
           <div className="book">
             <div className="book-top">
               <div className="book-cover" style={{ width: 128, height: 193,
-                backgroundImage: `url(${book.imageLinks&&book.imageLinks.thumbnail || ""})`
+                backgroundImage: `url(${thumbnail})`
                 }}></div>
                 <div className="book-shelf-changer">
-                  <select defaultValue = {book.shelf || "none"} onChange={(e) => {updateShelf(book,e.target.value)}}>
+                  <select
+                    value = {currentShelf}
+                    onChange={ e => {updateShelf(book, e.target.value)}}>
                     <option value="move" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>
                     <option value="wantToRead">Want to Read</option>
@@ -26,9 +29,8 @@ class Book extends Component{
                 </div>
             </div>
             <div className="book-title">{book.title}</div>
-            <div className="book-authors">{book.authors || "No author"}</div>
+            <div className="book-authors">{authors}</div>
           </div>
-        </li>
     )
   }
 }

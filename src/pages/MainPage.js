@@ -2,37 +2,11 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 //import PropTypes from 'prop-types'
 //import escapeRegExp from 'escape-string-regexp'
-import sortBy from 'sort-by'
-import * as BooksAPI from '../BooksAPI'
 import Shelf from '../Shelf'
 import BookSearch from './SearchPage'
 
 
 class MainPage extends Component{
-  constructor(props){
-    super(props)
-    this.state = {
-      books : []
-    }
-  }
-
-  componentDidMount() {
-    BooksAPI.getAll().then( response =>{
-      this.setState({books:response})
-    })
-  }
-
-  updateShelf = (book, shelf)=>{
-    BooksAPI.update(book, shelf).then(response =>{
-      book.shelf = shelf;
-
-      this.setState(state =>{{
-        books: {this.state.books.filter(b=>b.id===book.id).concat([book])}
-      }})//setState
-      console.log(this.state.books.filter(b => b.id=== book.id))
-    })//then
-
-  }
   render(){
     const catalogs = [
       {title : 'Currently Reading',
@@ -44,7 +18,6 @@ class MainPage extends Component{
       {title : 'Read',
        key : 'read'
      }]
-    this.state.books.sort(sortBy('title'))
     return (
         <div className="list-books">
           <div className="list-books-title">
@@ -54,10 +27,10 @@ class MainPage extends Component{
             <div>
               {catalogs.map((shelf)=>(
                 <Shelf
-                  books={this.state.books}
+                  books={this.props.books}
                   shelfTitle={shelf.title}
                   shelfKey={shelf.key}
-                  updateShelf={this.updateShelf} />
+                  updateShelf={this.props.updateShelf} />
               ))}
             </div>
            </div>

@@ -4,18 +4,44 @@ import * as BooksAPI from '../BooksAPI'
 import Book from '../Book'
 
 class SearchPage extends Component{
-  state = {
-    query :'Android',
-    sbooks :[]
+  constructor(props){
+    super(props)
+    this.state = {
+      query :'',
+      results : [],
+    }
+  }
+/*
+  componentDidMount() {
+    BooksAPI.search(this.state.query).then( (res) =>{
+      this.setState({books: res})
+    })
+  }*/
+
+  updateQuery(queryValue){
+    this.setState({query:queryValue});
+    this.search(queryValue);
   }
 
-  componentDidMount() {
-    BooksAPI.search(this.state.query).then( (books) =>{
-      this.setState({sbooks: books})
-    })
+  search(query){
+    if(query){
+      BooksAPI.search(query).then( res => {
+        if(res.error){
+          console.log("query with ["+ query + "] !!!")
+          console.log("error is: " + res.error)
+          this.setState({ results:[] })
+        }else{
+          this.setState({ results:res })
+        }
+      })}
+    else{
+      this.setState({ results:[] })
+    }
   }
+
 
   render(){
+    const {sMap, updateShelf} = this.props
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -29,14 +55,21 @@ class SearchPage extends Component{
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-            <input type="text" placeholder="Search by title or author"/>
+            <input type="text" placeholder="Search by title or author"
+              value = {this.state.query}
+              onChange = {e=>{this.updateQuery(e.target.value)}}/>
 
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.sbooks.map((book) =>(
-                <Book book={book} />
+            {this.state.results.map((book) =>(
+              <li key={book.id}>
+                <Book
+                  book={book}
+                  updateShelf={updateShelf}
+                  currentShelf={sMap.has(book.id)? sMap.get(book.id): 'none'}/>
+              </li>
             ))}
           </ol>
         </div>
