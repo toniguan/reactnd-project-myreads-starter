@@ -1,6 +1,6 @@
 # MyReads Project
 ___
-This project is part of Udacity FrontEnd Nanodegree program. MyReads is a bookshelf app that helps user to keep track all his books. User can select and catagorize books in three shelfs: Current Reading, Want to Read and Already Read. React technology is used to manage state, build component and  routing between pages.
+This project is part of Udacity FrontEnd Nanodegree program. MyReads is a bookshelf app that helps user to keep track all his books. User can select and catagorize books in three shelfs: Current Reading, Want to Read and Already Read. React technology is used to manage state and build component. React Router, Link and Route are used to navigate between pages.
 
 
 ## How to run
