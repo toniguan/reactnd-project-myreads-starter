@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-
 import './App.css'
 import sortBy from 'sort-by'
 import * as BooksAPI from './BooksAPI'
@@ -13,6 +12,7 @@ class BooksApp extends React.Component {
     sMap : {}  /* map <book.id : book.shelf>  used in SearchPage*/
   }
 
+  /*load the shelf books once app component mounted*/
   componentDidMount() {
     BooksAPI.getAll().then( response =>{
       this.setState({books:response})
@@ -20,6 +20,7 @@ class BooksApp extends React.Component {
     })
   }
 
+  /*build map based on the current shelf books*/
   buildMap(books){
     let myMap = new Map();
     books.forEach(book =>{
@@ -28,11 +29,15 @@ class BooksApp extends React.Component {
     this.setState({ sMap:myMap })
   }
 
+  /* update book's shelf*/
   updateShelf = (book, shelf)=>{
+    //push the change back to server
     BooksAPI.update(book, shelf).then(response =>{
+      //update the current book collection
       BooksAPI.getAll().then(response =>{
         this.setState({books:response})
       })//then2
+      //update the map
       shelf !== 'none' ? this.state.sMap.set(book.id, shelf):this.state.sMap.delete(book.id)
     })//then1
   }

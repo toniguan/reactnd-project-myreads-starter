@@ -1,15 +1,10 @@
 import React, {Component} from 'react'
-//import {Link} from 'react-router-dom'
-//import PropTypes from 'prop-types'
-//import escapeRegExp from 'escape-string-regexp'
-//import sortBy from 'sort-by'
-//book.imageLinks&&book.imageLinks.thumbnail || ''
-//currentShelf? currentShelf : 'none'
+
 class Book extends Component{
   render(){
     const {book, updateShelf, currentShelf} = this.props
     let thumbnail = book.imageLinks? book.imageLinks.thumbnail : '' // query = 'biography''tim'
-    let authors = this.props.book.authors? this.props.book.authors : 'No Author...' // query = 'poetry'
+    let authors = this.props.book.authors? this.props.book.authors.join(' & ') : 'No Author...' // query = 'poetry'
     return (
           <div className="book">
             <div className="book-top">

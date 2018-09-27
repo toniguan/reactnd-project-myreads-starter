@@ -1,14 +1,12 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 //import PropTypes from 'prop-types'
-//import escapeRegExp from 'escape-string-regexp'
 import Shelf from '../Shelf'
-import BookSearch from './SearchPage'
 
 
 class MainPage extends Component{
   render(){
-    const catalogs = [
+    const catalogs = [ // shelf catagory
       {title : 'Currently Reading',
        key : 'currentlyReading'
       },
@@ -26,7 +24,7 @@ class MainPage extends Component{
           <div className="list-books-content">
             <div>
               {catalogs.map((shelf)=>(
-                <Shelf
+                <Shelf key={shelf.key}
                   books={this.props.books}
                   shelfTitle={shelf.title}
                   shelfKey={shelf.key}
